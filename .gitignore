@@ -1,0 +1,105 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# ── Virtual Environments ──────────────────────────────────────────────────────
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ── Jupyter Notebooks ─────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
+
+# ── PyTorch & Model Weights ───────────────────────────────────────────────────
+*.pt
+*.pth
+*.ckpt
+*.bin
+checkpoints/
+saved_models/
+weights/
+
+# ── Data Files (keep small samples, ignore large datasets) ────────────────────
+*.csv
+*.tsv
+*.json
+*.jsonl
+!data/samples/*.json
+data/raw/
+data/processed/
+*.parquet
+*.arrow
+*.hdf5
+*.h5
+
+# ── Large Text Corpora ────────────────────────────────────────────────────────
+*.txt
+!data/samples/*.txt
+!**/the-verdict.txt
+
+# ── Logs & Outputs ────────────────────────────────────────────────────────────
+logs/
+*.log
+runs/
+wandb/
+lightning_logs/
+tensorboard/
+events.out.tfevents.*
+
+# ── OS Files ──────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDEs & Editors ────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+*.sublime-project
+*.sublime-workspace
+
+# ── Secrets & Config ──────────────────────────────────────────────────────────
+.env
+.env.local
+*.key
+secrets.json
+config_local.py
+
+# ── Cache ─────────────────────────────────────────────────────────────────────
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+__pypackages__/

@@ -107,7 +107,7 @@ This topic directly implements the tokenization design in **Radford et al. (2019
 |------|-------------|
 | `README.md` | This file — sharp topic summary |
 | `Byte_Pair_Encoder.ipynb` | Full implementation notebook with tiktoken |
-| `Topic2_BPE_ShivaKiranDadishetty.docx` | Complete technical documentation — BPE origins, all merge iterations, frequency tables, GPT-2 vocabulary breakdown, research connections |
+| `Topic2_BPE.docx` | Complete technical documentation — BPE origins, all merge iterations, frequency tables, GPT-2 vocabulary breakdown, research connections |
 
 ---
 

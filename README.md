@@ -12,8 +12,8 @@
 
 <br/>
 
-[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-01%20%2F%2036-1A56A0?style=for-the-badge)](.)
-[![Stage 1](https://img.shields.io/badge/Stage%201%20%7C%20Data%20Pipeline-1%2F6-2E75B6?style=for-the-badge)](.)
+[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-02%20%2F%2036-1A56A0?style=for-the-badge)](.)
+[![Stage 1](https://img.shields.io/badge/Stage%201%20%7C%20Data%20Pipeline-2%2F6-2E75B6?style=for-the-badge)](.)
 [![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-0%2F6-6B7280?style=for-the-badge)](.)
 [![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-0%2F6-6B7280?style=for-the-badge)](.)
 [![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-0%2F8-6B7280?style=for-the-badge)](.)
@@ -50,9 +50,9 @@ Read the `README.md` first. Run the `.ipynb` to see it in action. Open the `.doc
 ## Progress
 
 ```
-Overall  ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  1 / 36 topics complete
+Overall  ████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  2 / 36 topics complete
 
-Stage 1  Data Pipeline     ████░░░░░░░░░░░░░░░░  1 / 6
+Stage 1  Data Pipeline     ████████░░░░░░░░░░░░  2 / 6
 Stage 2  Attention         ░░░░░░░░░░░░░░░░░░░░  0 / 6
 Stage 3  Architecture      ░░░░░░░░░░░░░░░░░░░░  0 / 6
 Stage 4  Pretraining       ░░░░░░░░░░░░░░░░░░░░  0 / 8
@@ -72,7 +72,7 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 | # | Topic | Status | Core Concept |
 |---|-------|:------:|--------------|
 | 01 | [LLM Tokenizer from Scratch](./01_tokenizer/README.md) | ✅ | Regex splitting · Vocabulary construction · Encode & Decode |
-| 02 | [The GPT Tokenizer — Byte Pair Encoding](./02_bpe/README.md) | 🔲 | BPE merges · Subword units · GPT-2 vocabulary |
+| 02 | [The GPT Tokenizer — Byte Pair Encoding](./02_bpe/README.md) | ✅ | BPE merges · Subword units · GPT-2 vocabulary |
 | 03 | [Input-Target Data Pairs — DataLoader](./03_dataloader/README.md) | 🔲 | Sliding window · Context length · Batch construction |
 | 04 | [Token Embeddings](./04_token_embeddings/README.md) | 🔲 | Embedding matrix · Lookup · Dimensionality |
 | 05 | [Positional Embeddings](./05_positional_embeddings/README.md) | 🔲 | Absolute positional encoding · Why position matters |
@@ -173,34 +173,31 @@ Every major component maps to a specific section of a research paper. This serie
 ```
 llm-from-scratch/
 │
-├── README.md                                              ← You are here
-├── LICENSE                                                ← MIT License
-├── .gitignore                                             ← Python · PyTorch · Jupyter
+├── README.md                          ← You are here
+├── LICENSE                            ← MIT License
+├── .gitignore                         ← Python · PyTorch · Jupyter
 │
-├── 01_tokenizer/                                          ✅ Complete
-│   ├── README.md                                          ← Topic summary
-│   ├── LLM_Tokenizer.ipynb                               ← Runnable notebook
-│   └── Topic1_LLM_Tokenizer_ShivaKiranDadishetty.docx   ← Full documentation
-│
-├── 02_bpe/                                                🔲 Upcoming
+├── 01_tokenizer/                      ✅ Complete
 │   ├── README.md
-│   ├── notebook.ipynb
-│   └── Topic2_BPE_ShivaKiranDadishetty.docx
+│   ├── LLM_Tokenizer.ipynb
+│   └── Topic1_LLM_Tokenizer.docx
 │
-├── 03_dataloader/                                         🔲 Upcoming
-├── 04_token_embeddings/                                   🔲 Upcoming
-├── 05_positional_embeddings/                              🔲 Upcoming
-├── 06_data_pipeline/                                      🔲 Upcoming
+├── 02_bpe/                            ✅ Complete
+│   ├── README.md
+│   ├── Byte_Pair_Encoder.ipynb
+│   └── Topic2_BPE.docx
+│
+├── 03_dataloader/                     🔲 Upcoming
+├── 04_token_embeddings/               🔲 Upcoming
+├── 05_positional_embeddings/          🔲 Upcoming
+├── 06_data_pipeline/                  🔲 Upcoming
 │
 │   ... (Topics 07 – 35 follow same structure)
 │
-├── 36_ollama_eval/                                        🔲 Upcoming
-│   ├── README.md
-│   ├── notebook.ipynb
-│   └── Topic36_OllamaEval_ShivaKiranDadishetty.docx
+├── 36_ollama_eval/                    🔲 Upcoming
 │
 └── data/
-    └── the-verdict.txt                                    ← Edith Wharton (Topic 01)
+    └── the-verdict.txt
 ```
 
 ---
@@ -213,7 +210,7 @@ git clone https://github.com/shivakiran-ai/llm-from-scratch.git
 cd llm-from-scratch
 
 # Install dependencies
-pip install torch numpy jupyter matplotlib
+pip install torch numpy jupyter matplotlib tiktoken
 
 # Open Topic 01
 cd 01_tokenizer
@@ -253,7 +250,7 @@ The researchers who make the biggest contributions to LLMs are not those who kno
 
 Every topic is documented with:
 - Handwritten notes capturing the thinking process
-- A complete from-scratch Python implementation
+- A complete Python implementation
 - Connections to the original research papers
 - Personal observations and insights from building each component
 

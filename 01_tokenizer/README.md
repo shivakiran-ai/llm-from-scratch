@@ -56,7 +56,7 @@ This implementation directly reflects the tokenization design described in **Rad
 | File | Description |
 |------|-------------|
 | `LLM_Tokenizer.ipynb` | Full implementation notebook |
-| `Topic1_LLM_Tokenizer_ShivaKiranDadishetty.docx` | Complete technical documentation — every concept, iteration, and design decision in depth |
+| `Topic1_LLM_Tokenizer.docx` | Complete technical documentation — every concept, iteration, and design decision in depth |
 
 ---
 

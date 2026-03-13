@@ -122,8 +122,6 @@ This topic directly implements the tokenization design in **Radford et al. (2019
 
 *Part of the **Building LLMs from Scratch** series by **SHIVA KIRAN DADISHETTY***
 
-**[← Back to Main Repository](../README.md)**
-
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:1A56A0,100:0D3B6E&height=80&section=footer"/>
 
 </div>

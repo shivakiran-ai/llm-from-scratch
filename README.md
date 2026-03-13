@@ -40,7 +40,7 @@ Every topic folder contains exactly **three files**:
 | File | Purpose |
 |------|---------|
 | `README.md` | Sharp summary — key concept, what was built, core insight, paper connection. **Start here.** |
-| `TopicN_Title_ShivaKiranDadishetty.docx` | Complete deep dive — every iteration, all mathematics, full code reference, every design decision explained. |
+| `TopicN_Title.docx` | Complete deep dive — every iteration, all mathematics, full code reference, every design decision explained. |
 | `notebook.ipynb` | Fully annotated, runnable Python implementation — all code built from scratch, extensively commented. |
 
 Read the `README.md` first. Run the `.ipynb` to see it in action. Open the `.docx` to go completely deep.

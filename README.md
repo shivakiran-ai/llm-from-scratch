@@ -12,9 +12,9 @@
 
 <br/>
 
-[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-07%20%2F%2036-1A56A0?style=for-the-badge)](.)
+[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-08%20%2F%2036-1A56A0?style=for-the-badge)](.)
 [![Stage 1](https://img.shields.io/badge/Stage%201%20%7C%20Data%20Pipeline-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
-[![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-1%2F6-2E75B6?style=for-the-badge)](.)
+[![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-2%2F6-2E75B6?style=for-the-badge)](.)
 [![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-0%2F6-6B7280?style=for-the-badge)](.)
 [![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-0%2F8-6B7280?style=for-the-badge)](.)
 [![Stage 5](https://img.shields.io/badge/Stage%205%20%7C%20Finetuning-0%2F10-6B7280?style=for-the-badge)](.)
@@ -50,10 +50,10 @@ Read the `README.md` first. Run the `.ipynb` to see it in action. Open the `.doc
 ## Progress
 
 ```
-Overall  ████████████████████████████░░░░░░░░░░  7 / 36 topics complete
+Overall  ████████████████████████████████░░░░░░  8 / 36 topics complete
 
 Stage 1  Data Pipeline     ████████████████████  6 / 6  ✅ COMPLETE
-Stage 2  Attention         ████░░░░░░░░░░░░░░░░  1 / 6  ← active
+Stage 2  Attention         ████████░░░░░░░░░░░░  2 / 6  ← active
 Stage 3  Architecture      ░░░░░░░░░░░░░░░░░░░░  0 / 6
 Stage 4  Pretraining       ░░░░░░░░░░░░░░░░░░░░  0 / 8
 Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░░░░  0 / 10
@@ -87,8 +87,8 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 | # | Topic | Status | Core Concept |
 |---|-------|:------:|--------------|
 | 07 | [Introduction to Attention](./07_attention_intro/README.md) | ✅ | RNNs → LSTMs → Bahdanau → Transformers · 37-year history |
-| 08 | [Simplified Self-Attention](./08_simplified_attention/README.md) | 🔲 | Dot product scores · Softmax · Context vectors |
-| 09 | [Self-Attention: Keys, Queries & Values](./09_self_attention/README.md) | 🔲 | Q/K/V matrices · Projection · Scaled dot product |
+| 08 | [Simplified Self-Attention](./08_simplified_attention/README.md) | ✅ | Dot products · Softmax · Context vectors · No trainable weights |
+| 09 | [Self-Attention: Keys, Queries & Values](./09_self_attention/README.md) | 🔲 | W_Q · W_K · W_V · Scaled dot product |
 | 10 | [Causal Self-Attention](./10_causal_attention/README.md) | 🔲 | Masking future tokens · Autoregressive property |
 | 11 | [Multi-Head Attention Part 1](./11_multihead_p1/README.md) | 🔲 | Parallel heads · Concatenation · Implementation |
 | 12 | [Multi-Head Attention Part 2 — Full Mathematics](./12_multihead_p2/README.md) | 🔲 | Complete mathematical derivation · Projection matrices |
@@ -212,9 +212,14 @@ llm-from-scratch/
 │   ├── Attention_Intro.ipynb
 │   └── Topic7_AttentionIntro.docx
 │
-├── 08_simplified_attention/           🔲 Upcoming
+├── 08_simplified_attention/           ✅ Complete
+│   ├── README.md
+│   ├── Attention_Mechanism.ipynb
+│   └── Topic8_SimplifiedAttention.docx
 │
-│   ... (Topics 09 – 36 follow same structure)
+├── 09_self_attention/                 🔲 Upcoming
+│
+│   ... (Topics 10 – 36 follow same structure)
 │
 └── data/
     └── the-verdict.txt

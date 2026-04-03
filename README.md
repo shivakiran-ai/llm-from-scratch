@@ -12,9 +12,9 @@
 
 <br/>
 
-[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-09%20%2F%2036-1A56A0?style=for-the-badge)](.)
+[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-10%20%2F%2036-1A56A0?style=for-the-badge)](.)
 [![Stage 1](https://img.shields.io/badge/Stage%201%20%7C%20Data%20Pipeline-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
-[![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-3%2F6-2E75B6?style=for-the-badge)](.)
+[![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-4%2F6-2E75B6?style=for-the-badge)](.)
 [![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-0%2F6-6B7280?style=for-the-badge)](.)
 [![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-0%2F8-6B7280?style=for-the-badge)](.)
 [![Stage 5](https://img.shields.io/badge/Stage%205%20%7C%20Finetuning-0%2F10-6B7280?style=for-the-badge)](.)
@@ -50,10 +50,10 @@ Read the `README.md` first. Run the `.ipynb` to see it in action. Open the `.doc
 ## Progress
 
 ```
-Overall  ████████████████████████████████████░░  9 / 36 topics complete
+Overall  ████████████████████████████████████████░░  10 / 36 topics complete
 
 Stage 1  Data Pipeline     ████████████████████  6 / 6  ✅ COMPLETE
-Stage 2  Attention         ████████████░░░░░░░░  3 / 6  ← active
+Stage 2  Attention         ████████████████░░░░  4 / 6  ← active
 Stage 3  Architecture      ░░░░░░░░░░░░░░░░░░░░  0 / 6
 Stage 4  Pretraining       ░░░░░░░░░░░░░░░░░░░░  0 / 8
 Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░░░░  0 / 10
@@ -88,8 +88,8 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 |---|-------|:------:|--------------|
 | 07 | [Introduction to Attention](./07_attention_intro/README.md) | ✅ | RNNs → LSTMs → Bahdanau → Transformers · 37-year history |
 | 08 | [Simplified Self-Attention](./08_simplified_attention/README.md) | ✅ | Dot products · Softmax · Context vectors · No trainable weights |
-| 09 | [Self-Attention: Keys, Queries & Values](./09_self_attention/README.md) | ✅ | W_Q · W_K · W_V · Scaled dot-product attention · Two reasons for √d_k |
-| 10 | [Causal Self-Attention](./10_causal_attention/README.md) | 🔲 | Masking future tokens · Autoregressive property |
+| 09 | [Self-Attention: Keys, Queries & Values](./09_self_attention/README.md) | ✅ | W_Q · W_K · W_V · Scaled dot-product · Two reasons for √d_k |
+| 10 | [Causal Self-Attention](./10_causal_attention/README.md) | ✅ | Causal mask · -∞ trick · Dropout · register_buffer |
 | 11 | [Multi-Head Attention Part 1](./11_multihead_p1/README.md) | 🔲 | Parallel heads · Concatenation · Implementation |
 | 12 | [Multi-Head Attention Part 2 — Full Mathematics](./12_multihead_p2/README.md) | 🔲 | Complete mathematical derivation · Projection matrices |
 
@@ -178,53 +178,19 @@ llm-from-scratch/
 ├── .gitignore                         ← Python · PyTorch · Jupyter
 │
 ├── 01_tokenizer/                      ✅ Complete
-│   ├── README.md
-│   ├── LLM_Tokenizer.ipynb
-│   └── Topic1_LLM_Tokenizer.docx
-│
 ├── 02_bpe/                            ✅ Complete
-│   ├── README.md
-│   ├── Byte_Pair_Encoder.ipynb
-│   └── Topic2_BPE.docx
-│
 ├── 03_dataloader/                     ✅ Complete
-│   ├── README.md
-│   ├── Input_Output_Target_Pairs_DataLoader.ipynb
-│   └── Topic3_DataLoader.docx
-│
 ├── 04_token_embeddings/               ✅ Complete
-│   ├── README.md
-│   ├── Token_Embeddings.ipynb
-│   └── Topic4_TokenEmbeddings.docx
-│
 ├── 05_positional_embeddings/          ✅ Complete
-│   ├── README.md
-│   ├── Positional_Embeddings.ipynb
-│   └── Topic5_PositionalEmbeddings.docx
-│
 ├── 06_data_pipeline/                  ✅ Complete  ← Stage 1 Capstone
-│   ├── README.md
-│   ├── Full_Data_Pipeline.ipynb
-│   └── Topic6_FullDataPipeline.docx
-│
 ├── 07_attention_intro/                ✅ Complete  ← Stage 2 Opens
-│   ├── README.md
-│   ├── Attention_Intro.ipynb
-│   └── Topic7_AttentionIntro.docx
-│
 ├── 08_simplified_attention/           ✅ Complete
-│   ├── README.md
-│   ├── Attention_Mechanism.ipynb
-│   └── Topic8_SimplifiedAttention.docx
-│
 ├── 09_self_attention/                 ✅ Complete  ← Scaled Dot-Product Attention
-│   ├── README.md
-│   ├── Trainable_Self_Attention.ipynb
-│   └── Topic9_SelfAttentionQKV.docx
+├── 10_causal_attention/               ✅ Complete  ← Causal Mask + Dropout
 │
-├── 10_causal_attention/               🔲 Upcoming
+├── 11_multihead_p1/                   🔲 Upcoming  ← Next
 │
-│   ... (Topics 11 – 36 follow same structure)
+│   ... (Topics 12 – 36 follow same structure)
 │
 └── data/
     └── the-verdict.txt

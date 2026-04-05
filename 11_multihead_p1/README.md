@@ -66,25 +66,58 @@ THE RE-STITCH (OUTPUT)
 
 ## Numerical Trace (torch.manual_seed(123), d\_in=3, d\_out=2)
 
+Using the 6-token sequence "Your journey starts with one step" (d_in=3, d_out=2). Each head has its own W_Q, W_K, W_V of shape [3, 2]. Below traces one head from weight matrices through to the final context vector.
+
+**Step 1 — Weight matrices (actual values from notebook):**
+
 ```python
-# Weight matrices — actual values from the implementation
-W_query:  [[0.2961, 0.5166],    W_key:  [[0.1366, 0.1025],
-            [0.2517, 0.6886],             [0.1841, 0.7264],
-            [0.0740, 0.8665]]             [0.3153, 0.6871]]
+W_query = [[0.2961, 0.5166],    W_key = [[0.1366, 0.1025],    W_value = [[0.0756, 0.1966],
+            [0.2517, 0.6886],             [0.1841, 0.7264],               [0.3164, 0.4017],
+            [0.0740, 0.8665]]             [0.3153, 0.6871]]               [0.1186, 0.8274]]
+# shape [3, 2]                   # shape [3, 2]                  # shape [3, 2]
+```
 
-# query_2 = x_2 @ W_query  ("journey" token, x_2 = [0.55, 0.87, 0.66])
-query_2  →  tensor([0.4306, 1.4551])
+**Step 2 — Project "journey" token (x_2 = [0.55, 0.87, 0.66]) into query space:**
 
-# Attention score between "journey" and itself:
+```python
+query_2 = x_2 @ W_query  →  tensor([0.4306, 1.4551])
+```
+
+**Step 3 — Compute attention score of "journey" against itself:**
+
+```python
 attn_score_22 = query_2.dot(keys[1])  →  tensor(1.8524)
+```
 
-# All scores for query_2, scaled by 1/sqrt(d_k=2), softmax applied:
+**Step 4 — All scores for query_2 against every token, scaled by 1/√d_k, then softmax:**
+
+```python
+attn_scores_2 = query_2 @ keys.T
+→  tensor([1.2705, 1.8524, 1.8111, 1.0795, 0.5577, 1.5440])
+#           Your   journey  starts   with    one    step
+
 attn_weights_2 = torch.softmax(attn_scores_2 / 2**0.5, dim=-1)
-              →  tensor([0.1500, 0.2264, 0.2199, 0.1311, 0.0906, 0.1820])
-#                        Your   journey  starts   with    one    step
+→  tensor([0.1500, 0.2264, 0.2199, 0.1311, 0.0906, 0.1820])
+#  sum = 1.0 ✅  "journey" attends most to itself (0.2264)
+```
 
-# Context vector for "journey":
+**Step 5 — Weighted sum of value vectors gives the context vector:**
+
+```python
 context_vec_2 = attn_weights_2 @ values  →  tensor([0.3061, 0.8210])
+# shape [2] — one 2-dimensional context vector for "journey" from this head
+```
+
+**Step 6 — Two heads, two batches, concatenated:**
+
+```python
+# Two heads run the above independently with different W_Q, W_K, W_V
+# Output per head: [2, 6, 2] — then concatenated along dim=-1
+context_vecs = mha(batch)  →  shape [2, 6, 4]
+# tensor([[[-0.4519,  0.2216,  0.4772,  0.1063],   # Your
+#          [-0.5874,  0.0058,  0.5891,  0.3257],   # journey
+#          ...]])
+# First 2 values per row = Head 1 output   Last 2 = Head 2 output
 ```
 
 ---

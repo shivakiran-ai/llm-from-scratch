@@ -111,14 +111,62 @@ context_vec_2 = attn_weights_2 @ values  →  tensor([0.3061, 0.8210])
 **Step 6 — Two heads, two batches, concatenated:**
 
 ```python
-# Two heads run the above independently with different W_Q, W_K, W_V
-# Output per head: [2, 6, 2] — then concatenated along dim=-1
-context_vecs = mha(batch)  →  shape [2, 6, 4]
-# tensor([[[-0.4519,  0.2216,  0.4772,  0.1063],   # Your
-#          [-0.5874,  0.0058,  0.5891,  0.3257],   # journey
-#          ...]])
-# First 2 values per row = Head 1 output   Last 2 = Head 2 output
+# Head 1 runs with W_Q1, W_K1, W_V1  →  Z1, shape [2, 6, 2]
+# Head 2 runs with W_Q2, W_K2, W_V2  →  Z2, shape [2, 6, 2]
+#
+# torch.cat([Z1, Z2], dim=-1)  →  shape [2, 6, 4]
+#
+#                      ← Head 1 →  ← Head 2 →
+context_vecs = tensor([[[-0.4519,  0.2216,  0.4772,  0.1063],   # Your
+                         [-0.5874,  0.0058,  0.5891,  0.3257],   # journey
+                         [-0.6300, -0.0632,  0.6202,  0.3860],   # starts
+                         [-0.5675, -0.0843,  0.5478,  0.3589],   # with
+                         [-0.5526, -0.0981,  0.5321,  0.3428],   # one
+                         [-0.5299, -0.1081,  0.5077,  0.3493]],  # step
+                        [ ... identical for batch 2 ... ]])
+#
+# context_vecs.shape  →  torch.Size([2, 6, 4])
 ```
+
+---
+
+## The Foundation — CausalAttention (from Topic 10)
+
+Each head inside the wrapper IS a `CausalAttention` instance. Understanding the wrapper requires understanding what each head does internally:
+
+```python
+class CausalAttention(nn.Module):
+
+    def __init__(self, d_in, d_out, context_length, dropout, qkv_bias=False):
+        super().__init__()
+        self.d_out = d_out
+        self.W_query = nn.Linear(d_in, d_out, bias=qkv_bias)
+        self.W_key   = nn.Linear(d_in, d_out, bias=qkv_bias)
+        self.W_value = nn.Linear(d_in, d_out, bias=qkv_bias)
+        self.dropout = nn.Dropout(dropout)
+        self.register_buffer(
+            'mask',
+            torch.triu(torch.ones(context_length, context_length), diagonal=1)
+        )
+
+    def forward(self, x):
+        b, num_tokens, d_in = x.shape           # batch dimension b
+        keys    = self.W_key(x)                  # [b, num_tokens, d_out]
+        queries = self.W_query(x)
+        values  = self.W_value(x)
+
+        attn_scores = queries @ keys.transpose(1, 2)   # transpose dims 1&2, keep batch dim 0
+        attn_scores.masked_fill_(                       # in-place (_) — no memory copy
+            self.mask.bool()[:num_tokens, :num_tokens], -torch.inf)
+        attn_weights = torch.softmax(
+            attn_scores / keys.shape[-1]**0.5, dim=-1
+        )
+        attn_weights = self.dropout(attn_weights)
+
+        return attn_weights @ values               # [b, num_tokens, d_out]
+```
+
+> `MultiHeadAttentionWrapper` creates `num_heads` independent instances of this class — each with its own `W_query`, `W_key`, `W_value`, and `mask`. They share no weights.
 
 ---
 

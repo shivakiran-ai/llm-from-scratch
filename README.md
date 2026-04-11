@@ -12,10 +12,10 @@
 
 <br/>
 
-[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-13%20%2F%2036-1A56A0?style=for-the-badge)](.)
+[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-14%20%2F%2036-1A56A0?style=for-the-badge)](.)
 [![Stage 1](https://img.shields.io/badge/Stage%201%20%7C%20Data%20Pipeline-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
 [![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
-[![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-1%2F6-2E75B6?style=for-the-badge)](.)
+[![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-2%2F6-2E75B6?style=for-the-badge)](.)
 [![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-0%2F8-6B7280?style=for-the-badge)](.)
 [![Stage 5](https://img.shields.io/badge/Stage%205%20%7C%20Finetuning-0%2F10-6B7280?style=for-the-badge)](.)
 
@@ -50,11 +50,11 @@ Read the `README.md` first. Run the `.ipynb` to see it in action. Open the `.doc
 ## Progress
 
 ```
-Overall  ████████████████████████████████████████░░  13 / 36 topics complete
+Overall  ████████████████████████████████████████░░  14 / 36 topics complete
 
 Stage 1  Data Pipeline     ████████████████████  6 / 6  ✅ COMPLETE
 Stage 2  Attention         ████████████████████  6 / 6  ✅ COMPLETE
-Stage 3  Architecture      ███░░░░░░░░░░░░░░░░░  1 / 6  ← active
+Stage 3  Architecture      ██████░░░░░░░░░░░░░░  2 / 6  ← active
 Stage 4  Pretraining       ░░░░░░░░░░░░░░░░░░░░  0 / 8
 Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░░░░  0 / 10
 ```
@@ -102,7 +102,7 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 | # | Topic | Status | Core Concept |
 |---|-------|:------:|--------------|
 | 13 | [Bird's Eye View of LLM Architecture](./13_architecture_overview/README.md) | ✅ | GPT_CONFIG_124M · DummyGPTModel · Full pipeline shape verification |
-| 14 | [Layer Normalization](./14_layer_norm/README.md) | 🔲 | Pre-LN vs Post-LN · Numerical stability · Implementation |
+| 14 | [Layer Normalization](./14_layer_norm/README.md) | ✅ | eps · scale · shift · unbiased=False · Pre-LayerNorm |
 | 15 | [GELU Activation Function](./15_gelu/README.md) | 🔲 | GELU vs ReLU · Smooth gradients · Why GPT uses GELU |
 | 16 | [Shortcut Connections](./16_shortcuts/README.md) | 🔲 | Residual streams · Gradient flow · Deep network training |
 | 17 | [Full Transformer Block](./17_transformer_block/README.md) | 🔲 | Complete block assembly · All components integrated |
@@ -191,7 +191,8 @@ llm-from-scratch/
 ├── 11_multihead_p1/                   ✅ Complete
 ├── 12_multihead_p2/                   ✅ Complete
 ├── 13_architecture_overview/          ✅ Complete
-├── 14_layer_norm/                     🔲 Upcoming  ← Next
+├── 14_layer_norm/                     ✅ Complete
+├── 15_gelu/                           🔲 Upcoming  ← Next
 │
 │   ... (Topics 12 – 36 follow same structure)
 │

@@ -1,190 +1,172 @@
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D3B6E,100:1A56A0&height=120&text=Topic%2007%20%E2%80%94%20Introduction%20to%20Attention&fontSize=28&fontColor=ffffff&fontAlignY=55&desc=Stage%202%20Opens%20%7C%20Building%20LLMs%20from%20Scratch%20%7C%20SHIVA%20KIRAN%20DADISHETTY&descSize=13&descAlignY=78"/>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D3B6E,100:1A56A0&height=130&text=Topic%2007%20%E2%80%94%20Introduction%20to%20Attention&fontSize=28&fontColor=ffffff&fontAlignY=52&desc=Technical%20Report%20%7C%20Stage%202%3A%20The%20Attention%20Mechanism%20%7C%20Building%20LLMs%20from%20Scratch&descSize=12&descAlignY=78"/>
 
 <br/>
 
 [![Topic](https://img.shields.io/badge/Topic-07%20of%2036-0D3B6E?style=for-the-badge)](.)
 [![Stage](https://img.shields.io/badge/Stage%202-Attention%20Mechanism-1A56A0?style=for-the-badge)](.)
-[![Type](https://img.shields.io/badge/Type-Conceptual%20Foundation-2E75B6?style=for-the-badge)](.)
-[![Builds Toward](https://img.shields.io/badge/Builds%20Toward-Multi--Head%20Attention-F59E0B?style=for-the-badge)](.)
+[![Document](https://img.shields.io/badge/Document-Conceptual%20%26%20Historical-2E75B6?style=for-the-badge)](.)
+[![Version](https://img.shields.io/badge/Version-1.0-22C55E?style=for-the-badge)](.)
+[![References](https://img.shields.io/badge/References-7%20%7C%20IEEE-F59E0B?style=for-the-badge)](.)
 
-**[← Back to Main Repository](../README.md)**
+**[← Back to the Building LLMs from Scratch series](../README.md)**
 
 </div>
 
 ---
 
-## Overview
+## Abstract
 
-Stage 2 opens with the most important question in modern AI: **why does attention exist?** This topic does not implement attention yet — it builds the complete conceptual and historical case for why attention had to be invented. RNNs fail on long sequences. LSTMs help but do not solve the bottleneck. Bahdanau (2014) introduces selective access. Transformers (2017) eliminate the RNN entirely. Every design decision in GPT-2 traces back to the failures documented here.
-
----
-
-## The Sentence That Motivates Everything
-
-```
-"The cat that was sitting on the mat, which was next to the dog, jumped."
-     ↑                                                             ↑
-  subject                                                        verb
-
-When the model processes 'cat' — it must pay maximum attention to 'jumped'.
-These two semantically connected words are separated by an 8-word relative clause.
-This is a LONG-TERM DEPENDENCY. Sequential models break here.
-```
+This topic establishes the conceptual and historical foundation for the attention mechanism — the architectural innovation at the heart of every modern large language model. Beginning with the long-term dependency problem in natural language, the document traces the thirty-seven-year progression of sequence modelling: recurrent neural networks and their information bottleneck, long short-term memory networks and their partial mitigation of vanishing gradients, the Bahdanau attention mechanism as the first direct-access formulation, and the Transformer architecture which eliminates recurrence entirely. A toy hand-computed alignment matrix illustrates Bahdanau attention numerically, and an open question is raised regarding whether the original thesis of self-attention supplanting recurrence holds up under the quadratic-complexity limits of long-context models. This topic is a conceptual opener for Stage 2; implementation of the mechanisms described here begins in Topic 8.
 
 ---
 
-## The Historical Journey — 37 Years
+## At a Glance
 
-```
-RNNs (1980)
-→ Innovation:  Hidden state captures memory across time steps
-→ Limitation:  Vanishing gradients · Entire input compressed into ONE context vector
-                              ↓
-LSTMs (1997)
-→ Innovation:  Cell state + 3 gates (forget, input, output) — better long-term memory
-→ Limitation:  Still sequential · Still single context vector bottleneck
-                              ↓
-Bahdanau Attention (2014)
-→ Innovation:  Decoder accesses ALL encoder hidden states selectively
-→ Limitation:  Still requires RNN backbone
-                              ↓
-Transformers (2017)
-→ Innovation:  Self-attention only — no RNN required · Fully parallel
-→ This is what GPT-2 uses ← built in Topics 8–12
-```
+| | |
+|---|---|
+| **Topic** | 07 of 36 — Stage 2 Opening |
+| **Document type** | Conceptual and historical — no implementation |
+| **Core question** | Why does attention exist? What architectural failure did it replace? |
+| **Historical arc** | RNNs (1980) → LSTMs (1997) → Bahdanau (2014) → Transformers (2017) |
+| **Implementation status** | No attention code introduced here; begins in Topic 8 |
+| **Main artifact** | `Topic7_AttentionIntro.docx` — 17-page technical report |
+| **Version** | 1.0 · April 2026 |
 
 ---
 
-## The RNN Bottleneck — Why It Fails
+## Topic Overview
 
-```
-Encoding stage:
-[Kannst][du][mir][helfen][diesen][Satz][zu][übersetzen]
-  h1  →  h2  →  h3  →  h4  →  h5  →  h6  →  h7  →  h8
-                                                        ↓
-                                         SINGLE CONTEXT VECTOR
-                                         (h1 through h7 discarded)
-                                                        ↓
-Decoding stage: decoder receives ONLY h8
+Every modern large language model is built on a single architectural idea: every token in a sequence should have direct access to every other token when computing its own representation. This idea — self-attention — did not appear in a single paper. It is the outcome of a thirty-seven-year argument between architectures, each addressing the failures of the previous one while revealing new limitations of its own.
 
-Problem: For long sentences, one vector cannot encode all information.
-Decoder has no direct access to earlier hidden states.
-This leads to loss of context — especially for long-range dependencies.
-```
+This document traces that argument. It is a conceptual rather than an implementation topic: no PyTorch code is introduced here, because the purpose is to make the design decisions that drive Topics 8 through 18 legible. Every choice made in the GPT-2 architecture — causal masking, the 4× feed-forward expansion ratio, the specific placement of LayerNorm, the decision to use 12 parallel attention heads rather than a single larger one — is a response to a failure documented in this document. Implementation begins in the next topic.
 
 ---
 
-## The LSTM Internal Architecture
+## The Motivating Problem
 
-```
-At each time step t, an LSTM maintains TWO states:
-  h_t  = hidden state  (short-term memory)
-  c_t  = cell state    (long-term memory)
+Sequential models fail on long-term dependencies. The canonical example:
 
-Three gating mechanisms control the flow:
+> *"The cat that was sitting on the mat, which was next to the dog, jumped."*
 
-Forget gate:  f_t = sigmoid(W_f · [h_{t-1}, x_t])   ← what to erase
-Input gate:   i_t = sigmoid(W_i · [h_{t-1}, x_t])   ← what to write
-Output gate:  o_t = sigmoid(W_o · [h_{t-1}, x_t])   ← what to output
-
-Cell state update:
-  c_t = f_t * c_{t-1}  +  i_t * tanh(W_c · [h_{t-1}, x_t])
-         ↑ forget old       ↑ write new
-
-The additive update is what solves vanishing gradients —
-gradients flow back through c_t without diminishing.
-```
+Processing the word `jumped` correctly requires direct access to the subject `cat`, eight tokens earlier across a relative clause. A recurrent architecture must route this information through every intermediate hidden state — and no fixed-size vector can reliably preserve all such relationships as sequence length grows. The bottleneck is architectural, not a matter of more data or larger hidden dimensions. This is the specific failure that attention was invented to fix.
 
 ---
 
-## Bahdanau Attention — The Fix
+## The Thirty-Seven-Year Timeline
 
-```python
-# WITHOUT attention — old RNN decoder sees only final hidden state:
-context = h_final   # single fixed vector for ALL output tokens
+| Year | Architecture | Innovation | Remaining limitation |
+|:----:|--------------|------------|----------------------|
+| **1980** | Recurrent Neural Networks | Hidden state preserves memory across time steps | Vanishing gradients; single context vector bottleneck |
+| **1997** | Long Short-Term Memory | Cell state and three-gate mechanism allow gradients to flow across long sequences | Sequential by construction; bottleneck unchanged |
+| **2014** | Bahdanau Attention | Decoder accesses all encoder hidden states via learned attention weights | Still requires an RNN backbone |
+| **2017** | Transformer | Self-attention replaces recurrence entirely; fully parallel | *Current state of the art — basis of every modern LLM* |
 
-# WITH Bahdanau attention — decoder sees ALL hidden states:
-# For each output token, compute attention weights dynamically:
+The pace of progress accelerated: seventeen years from RNN to LSTM, seventeen from LSTM to Bahdanau, but only three from Bahdanau to the full Transformer. The Transformer addressed all three prior limitations simultaneously — no vanishing gradients, no context bottleneck, fully parallelisable — which is why every modern decoder-only language model, from GPT-2 onwards, is built on it.
 
-# Generating 'I' from 'Je suis étudiant':
-attention_weights = [0.85, 0.10, 0.05]   # h1('Je') dominates
-context = 0.85*h1 + 0.10*h2 + 0.05*h3
+> A detailed visual timeline appears as **Figure 1** in `Topic7_AttentionIntro.docx`.
 
-# Generating 'am':
-attention_weights = [0.05, 0.88, 0.07]   # h2('suis') dominates
-context = 0.05*h1 + 0.88*h2 + 0.07*h3
+---
 
-# The model is NOT mindlessly aligning position 1 with position 1.
-# It LEARNED from training data how to align words in French-English.
-# The alignment is data-driven — discovered through the training process.
-```
+## The Four Attention Types — Stage 2 Roadmap
+
+Stage 2 implements the full attention mechanism across six topics. Each topic introduces exactly one new architectural capability on top of the previous:
+
+| # | Topic | Capability introduced |
+|:-:|-------|------------------------|
+| 07 | Introduction to Attention | *(This topic)* Conceptual and historical motivation |
+| 08 | Simplified Self-Attention | Attention without trainable weights — dot products, softmax, context vectors |
+| 09 | Self-Attention with Q / K / V | Trainable projection matrices `W_Q`, `W_K`, `W_V`; scaled dot-product attention |
+| 10 | Causal Self-Attention | Causal masking for autoregressive generation; dropout on attention weights |
+| 11 | Multi-Head Attention — Wrapper | Parallel heads via `nn.ModuleList` (conceptual implementation) |
+| 12 | Multi-Head Attention — Weight-Split | Single-matrix production formulation used in GPT-2 |
+
+By Topic 12, the exact multi-head attention module used in GPT-2 is complete and verified.
 
 ---
 
 ## Cross-Attention vs Self-Attention
 
-| | Cross-Attention (Bahdanau) | Self-Attention (Transformers) |
-|--|--------------------------|-------------------------------|
-| Sequences | 2 different sequences | 1 sequence attending to itself |
-| Use case | Translation (source → target) | Language generation (GPT) |
-| Access | Decoder attends to encoder states | Every token attends to all tokens |
-| GPT-2 uses | ❌ | ✅ |
+| Property | Cross-Attention *(Bahdanau, 2014)* | Self-Attention *(Transformer, 2017)* |
+|---|---|---|
+| Sequences involved | Two different sequences | One sequence attending to itself |
+| Primary use case | Machine translation (source → target) | Language generation (GPT family) |
+| Access pattern | Decoder attends to encoder states | Every token attends to every token in the same sequence |
+| Used in GPT-2 | No | Yes — with causal masking |
 
-> In self-attention, all attention is given **within** a particular sequence. The sequence attends to itself — every token can attend to every other token in the same sequence when computing its representation.
-
----
-
-## The Four Attention Types — Progression Through Stage 2
-
-| Topic | Type | What It Adds |
-|-------|------|-------------|
-| 07 | Introduction to Attention | Historical motivation — why attention had to be invented |
-| 08 | Simplified Self-Attention | Core mathematics — dot products, softmax, context vectors |
-| 09 | Self-Attention with Q/K/V | Trainable W_Q, W_K, W_V projection matrices |
-| 10 | Causal Self-Attention | Masking — only attend to previous tokens |
-| 11–12 | Multi-Head Attention | Parallel heads — different representation subspaces |
+Cross-attention operates *between* two sequences; self-attention operates *within* one sequence. Modern autoregressive language models use only self-attention, combined with a causal mask that prevents any token from attending to positions to its right.
 
 ---
 
-## Key Insight
+## Key Technical Observations
 
-> The problem attention solves is not a performance limitation — it is a **fundamental architectural impossibility**. For long-range dependencies, sequential models cannot maintain the required information across the single context vector bottleneck regardless of model size or training data. Attention changes the architecture so that every token has direct access to every other token. No bottleneck. No information loss. This single change enables the entire GPT architecture.
+Six conceptual takeaways motivate the implementation work that follows. The full argument for each appears in Section 10 of the main document.
 
----
-
-## Research Connection
-
-| Paper | Year | Contribution |
-|-------|------|-------------|
-| Hochreiter & Schmidhuber — *Long Short-Term Memory* | 1997 | Cell state + gating mechanisms — solved vanishing gradients |
-| Bahdanau et al. — *Neural Machine Translation by Jointly Learning to Align and Translate* | 2014 | First attention mechanism — selective access to all encoder states |
-| Vaswani et al. — *Attention Is All You Need* | 2017 | Transformer — self-attention only, no RNN required |
-| Radford et al. — *GPT-2* | 2019 | Causal self-attention for language generation |
+1. **The bottleneck is architectural, not statistical.** No amount of data or compute can fix an RNN's inability to route information across a single fixed-size context vector. Only a change in architecture can.
+2. **Attention weights are learned, not designed.** The alignment between source and target positions emerges from training on parallel corpora; it is never imposed by hand.
+3. **The 'self' in self-attention is load-bearing.** Cross-attention operates between two sequences; self-attention operates within one. GPT-style autoregressive generation requires only the latter, plus a causal mask.
+4. **Dynamic focus changes the shape of computation.** At every decoding step the attention distribution is recomputed from scratch, allowing variable-length inputs to produce variable-length outputs without loss of fidelity.
+5. **LSTMs solved the vanishing gradient, not the bottleneck.** These are often confused. The additive cell-state update prevents gradients from diminishing; it does not widen the single-vector information channel between encoder and decoder. Two different failures, only the first addressed by LSTMs.
+6. **Parallelism is the key computational advantage.** RNNs must process tokens strictly sequentially — token *t* cannot be computed until token *t−1* is done. Transformers process all tokens simultaneously. This is why Transformers train orders of magnitude faster than RNNs on modern GPU hardware.
 
 ---
 
-## Files
+## Experiments and Open Questions
+
+Beyond the historical narrative, the main document contributes three items that move it from summary to engagement with the literature:
+
+- **A hand-computed Bahdanau alignment matrix** for a toy French → English translation, demonstrating numerically how the learned alignment distribution handles words with no direct cross-language counterpart (Section 11.1).
+- **An open question on the Transformer thesis** — whether *"Attention Is All You Need"* remains defensible given the quadratic complexity of self-attention in long-context regimes, and what the revival of recurrence in state-space models means for the original claim (Section 11.2).
+- **Proposed future work** — an empirical protocol for demonstrating the RNN information bottleneck on a synthetic reverse-string task, comparing accuracy as a function of sequence length against a matched Transformer (Section 11.3).
+
+---
+
+## References
+
+References are listed in IEEE numeric format. Each is cited inline in the main document and included in the References section at the end of the docx.
+
+| # | Authors | Title | Venue | Year |
+|:-:|---------|-------|-------|:-:|
+| 1 | S. Hochreiter and J. Schmidhuber | Long Short-Term Memory | *Neural Computation* | 1997 |
+| 2 | D. Bahdanau, K. Cho, and Y. Bengio | Neural Machine Translation by Jointly Learning to Align and Translate | *ICLR* | 2015 |
+| 3 | A. Vaswani et al. | Attention Is All You Need | *NeurIPS* | 2017 |
+| 4 | A. Radford et al. | Language Models are Unsupervised Multitask Learners | *OpenAI Technical Report* | 2019 |
+| 5 | J. L. Elman | Finding Structure in Time | *Cognitive Science* | 1990 |
+| 6 | Y. Bengio, P. Simard, and P. Frasconi | Learning Long-Term Dependencies with Gradient Descent is Difficult | *IEEE Trans. Neural Networks* | 1994 |
+| 7 | I. Sutskever, O. Vinyals, and Q. V. Le | Sequence to Sequence Learning with Neural Networks | *NeurIPS* | 2014 |
+
+---
+
+## Files in This Directory
 
 | File | Description |
 |------|-------------|
-| `README.md` | This file — conceptual summary |
-| `Attention_Intro.ipynb` | Notebook — simplified attention, context vectors, attention scores |
-| `Topic7_AttentionIntro.docx` | Complete documentation — 12 sections, RNN failure, LSTM gates, Bahdanau 2014, self-attention definition, 37-year timeline |
+| `README.md` | This document — conceptual summary, stage roadmap, and reader entry point |
+| `Attention_Intro.ipynb` | Cumulative notebook containing all code from Stage 1 (Topics 1–6). No attention code is introduced here; implementation begins in Topic 8 |
+| `Topic7_AttentionIntro.docx` | Primary artifact (v1.0) — 17-page technical report comprising title page with abstract and keywords, static table of contents with page numbers, 13 numbered sections, embedded 37-year timeline figure (author's illustration), Experiments & Open Questions, Discussion on relationship to prior work, and IEEE-format references |
+
+> **Note on the docx:** the Table of Contents is statically generated with real page numbers. No fields need to be updated on open; the document renders identically in Microsoft Word, Google Docs, LibreOffice, and PDF exports.
 
 ---
 
-## Next Topic
+## Navigation
 
-**[Topic 08 → Simplified Self-Attention](../08_simplified_attention/README.md)**
-*The mathematical implementation — dot products, softmax normalization, context vectors. No trainable weights yet — pure attention mathematics from scratch.*
+**Previous:** &nbsp; [Topic 06 — Full Data Preprocessing Pipeline](../06_data_pipeline/README.md) &nbsp;·&nbsp; *Closes Stage 1*
+
+**Next:** &nbsp; [Topic 08 — Simplified Self-Attention](../08_simplified_attention/README.md) &nbsp;·&nbsp; *The first implementation of attention from scratch — dot products, softmax normalisation, and context vectors, without any trainable weights. Establishes the mathematical core of the mechanism before the full Q/K/V formulation in Topic 9.*
 
 ---
 
 <div align="center">
 
-*Part of the **Building LLMs from Scratch** series by **SHIVA KIRAN DADISHETTY***
+**Building LLMs from Scratch**  
+A technical report series on the ground-up implementation of a GPT-2-class language model.
+
+**Shiva Kiran Dadishetty** &nbsp;·&nbsp; Independent Research &nbsp;·&nbsp; Texas, USA  
+[github.com/shivakiran-ai/llm-from-scratch](https://github.com/shivakiran-ai/llm-from-scratch)
+
+*Document version 1.0 &nbsp;·&nbsp; Last updated April 2026*
 
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:1A56A0,100:0D3B6E&height=80&section=footer"/>
 

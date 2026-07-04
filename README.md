@@ -80,7 +80,7 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 
 ---
 
-### 🧠 Stage 2 — The Attention Mechanism
+### 🧠 Stage 2 — The Attention Mechanism ✅
 
 > *The core innovation that makes Transformers work — built from the ground up*
 
@@ -146,6 +146,67 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 
 ---
 
+## LLM Systems — Inference, Serving & Hardware
+
+> A companion series covering production LLM systems — inference optimization, serving infrastructure, and distributed training — derived from first principles with every concept traced to its source paper.
+
+This is not a separate topic list. It is the **systems layer** that sits on top of the implementation series above — explaining how the models built here are actually served, optimized, and scaled in production at companies like NVIDIA, OpenAI, and Anthropic.
+
+### The Chain — How Every Systems Topic Connects
+
+```
+Transformer Architecture
+        │  produces Q, K, V matrices — grow with sequence length
+        ▼
+KV Cache  ✅
+        │  stores K and V to avoid recomputation
+        │  BUT causes memory fragmentation at scale
+        ▼
+PagedAttention  🔄
+        │  solves fragmentation with non-contiguous block tables
+        │  BUT still limited by number of KV heads
+        ▼
+MHA → MQA → GQA → MLA  📋
+        │  reduces KV heads — cuts cache memory per request
+        │  BUT attention IO still dominates at long context
+        ▼
+Online Softmax & FlashAttention  📋
+        │  fuses softmax — reduces HBM reads to O(n)
+        │  BUT KV cache still large in bytes
+        ▼
+KV Cache Quantization INT8/FP8  📋
+        │  halves byte size — minimal quality loss
+        ▼
+vLLM Internals  📋
+        │  PagedAttention + continuous batching + GPU scheduler
+        ▼
+Distributed Training DDP · TP · PP  📋
+        │  parallelism strategies across GPU nodes
+        ▼
+NCCL · NVLink · InfiniBand · DGX  📋
+        GPU interconnect · data center networking · hardware stack
+```
+
+> Each topic is the **solution** to the problem created by the previous topic.
+
+### Systems Topics Progress
+
+| # | Topic | Status | One-Line Answer |
+|---|-------|:------:|-----------------|
+| 01 | [KV Cache](./llm-systems/01_kv_cache/README.md) | ✅ | Avoids recomputing K and V during decode — O(n²) → O(n) |
+| 02 | [PagedAttention](./llm-systems/02_paged_attention/README.md) | 🔄 | Non-contiguous KV blocks via block table — near-zero VRAM waste |
+| 03 | [Transformer Architecture](./llm-systems/03_transformer_architecture/README.md) | 📋 | Full forward pass tensor trace — every shape at every layer |
+| 04 | [MHA → MQA → GQA → MLA](./llm-systems/04_attention_evolution/README.md) | 📋 | KV head reduction evolution — from MHA to DeepSeek MLA |
+| 05 | [Online Softmax & FlashAttention](./llm-systems/05_flash_attention/README.md) | 📋 | Fused single-pass softmax — O(n²) → O(n) HBM IO |
+| 06 | [KV Cache Quantization](./llm-systems/06_kv_quantization/README.md) | 📋 | INT8/FP8 scale-and-zero-point — halves KV memory |
+| 07 | [vLLM Internals](./llm-systems/07_vllm_internals/README.md) | 📋 | PagedAttention + continuous batching + GPU memory scheduler |
+| 08 | [Distributed Training](./llm-systems/08_distributed_training/README.md) | 📋 | DDP · Tensor Parallelism · Pipeline Parallelism · NCCL All-Reduce |
+| 09 | [NCCL · NVLink · InfiniBand · DGX](./llm-systems/09_hardware_architecture/README.md) | 📋 | NVLink 600 GB/s · InfiniBand RDMA · DGX cluster architecture |
+
+**→ [View Full LLM Systems Series](./llm-systems/README.md)**
+
+---
+
 ## Design Philosophy
 
 Three principles guide every single implementation in this series:
@@ -165,6 +226,10 @@ Every major component maps to a specific section of a research paper. This serie
 | Radford et al. (2019) — *GPT-2* | Language model pretraining at scale | 01 – 26 |
 | Brown et al. (2020) — *GPT-3* | Few-shot learning, scaling laws | 19 – 26 |
 | Hu et al. (2021) — *LoRA* | Parameter-efficient finetuning | 27 – 36 |
+| Kwon et al. (2023) — *PagedAttention* | LLM serving with vLLM | Systems 01 – 02 |
+| Dao et al. (2022) — *FlashAttention* | IO-aware attention | Systems 05 |
+| Ainslie et al. (2023) — *GQA* | Grouped query attention | Systems 04 |
+| DeepSeek-AI (2024) — *DeepSeek-V2* | Multi-Latent Attention | Systems 04 |
 
 ---
 
@@ -174,28 +239,49 @@ Every major component maps to a specific section of a research paper. This serie
 llm-from-scratch/
 │
 ├── README.md                          ← You are here
-├── LICENSE                            ← MIT License
-├── .gitignore                         ← Python · PyTorch · Jupyter
+├── LICENSE
+├── .gitignore
 │
 ├── 01_tokenizer/                      ✅ Complete
 ├── 02_bpe/                            ✅ Complete
 ├── 03_dataloader/                     ✅ Complete
 ├── 04_token_embeddings/               ✅ Complete
 ├── 05_positional_embeddings/          ✅ Complete
-├── 06_data_pipeline/                  ✅ Complete  ← Stage 1 Capstone
-├── 07_attention_intro/                ✅ Complete  ← Stage 2 Opens
+├── 06_data_pipeline/                  ✅ Complete
+├── 07_attention_intro/                ✅ Complete
 ├── 08_simplified_attention/           ✅ Complete
-├── 09_self_attention/                 ✅ Complete  ← Scaled Dot-Product Attention
-├── 10_causal_attention/               ✅ Complete  ← Causal Mask + Dropout
-│
+├── 09_self_attention/                 ✅ Complete
+├── 10_causal_attention/               ✅ Complete
 ├── 11_multihead_p1/                   ✅ Complete
 ├── 12_multihead_p2/                   ✅ Complete
 ├── 13_architecture_overview/          ✅ Complete
 ├── 14_layer_norm/                     ✅ Complete
 ├── 15_gelu/                           ✅ Complete
-├── 16_shortcuts/                      🔲 Upcoming  ← Next
+├── 16_shortcuts/                      🔲 Next
+├── 17_transformer_block/              🔲 Upcoming
+├── 18_gpt2_model/                     🔲 Upcoming
+│   ... (Topics 19 – 36 same structure)
 │
-│   ... (Topics 12 – 36 follow same structure)
+├── llm-systems/                       ← LLM Systems Series
+│   ├── README.md                      ← Master index
+│   ├── 01_kv_cache/
+│   │   └── README.md                  ✅ Complete
+│   ├── 02_paged_attention/
+│   │   └── README.md                  🔄 In progress
+│   ├── 03_transformer_architecture/
+│   │   └── README.md                  📋 Upcoming
+│   ├── 04_attention_evolution/
+│   │   └── README.md                  📋 Upcoming
+│   ├── 05_flash_attention/
+│   │   └── README.md                  📋 Upcoming
+│   ├── 06_kv_quantization/
+│   │   └── README.md                  📋 Upcoming
+│   ├── 07_vllm_internals/
+│   │   └── README.md                  📋 Upcoming
+│   ├── 08_distributed_training/
+│   │   └── README.md                  📋 Upcoming
+│   └── 09_hardware_architecture/
+│       └── README.md                  📋 Upcoming
 │
 └── data/
     └── the-verdict.txt

@@ -12,10 +12,10 @@
 
 <br/>
 
-[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-15%20%2F%2036-1A56A0?style=for-the-badge)](.)
+[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-16%20%2F%2036-1A56A0?style=for-the-badge)](.)
 [![Stage 1](https://img.shields.io/badge/Stage%201%20%7C%20Data%20Pipeline-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
 [![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
-[![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-3%2F6-2E75B6?style=for-the-badge)](.)
+[![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-4%2F6-2E75B6?style=for-the-badge)](.)
 [![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-0%2F8-6B7280?style=for-the-badge)](.)
 [![Stage 5](https://img.shields.io/badge/Stage%205%20%7C%20Finetuning-0%2F10-6B7280?style=for-the-badge)](.)
 
@@ -50,11 +50,11 @@ Read the `README.md` first. Run the `.ipynb` to see it in action. Open the `.doc
 ## Progress
 
 ```
-Overall  ████████████████████████████████████████░░  15 / 36 topics complete
+Overall  ████████████████████████████████████████░░  16 / 36 topics complete
 
 Stage 1  Data Pipeline     ████████████████████  6 / 6  ✅ COMPLETE
 Stage 2  Attention         ████████████████████  6 / 6  ✅ COMPLETE
-Stage 3  Architecture      █████████░░░░░░░░░░░  3 / 6  ← active
+Stage 3  Architecture      ████████████░░░░░░░░  4 / 6  ← active
 Stage 4  Pretraining       ░░░░░░░░░░░░░░░░░░░░  0 / 8
 Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░░░░  0 / 10
 ```
@@ -104,7 +104,7 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 | 13 | [Bird's Eye View of LLM Architecture](./13_architecture_overview/README.md) | ✅ | GPT_CONFIG_124M · DummyGPTModel · Full pipeline shape verification |
 | 14 | [Layer Normalization](./14_layer_norm/README.md) | ✅ | eps · scale · shift · unbiased=False · Pre-LayerNorm |
 | 15 | [GELU Activation Function](./15_gelu/README.md) | ✅ | GELU · dead neuron problem · FeedForward 768→3072→768 |
-| 16 | [Shortcut Connections](./16_shortcuts/README.md) | 🔲 | Residual streams · Gradient flow · Deep network training |
+| 16 | [Shortcut Connections](./16_shortcuts/README.md) | ✅ | x = x + layer(x) · "+1" gradient term · vanishing gradient fix |
 | 17 | [Full Transformer Block](./17_transformer_block/README.md) | 🔲 | Complete block assembly · All components integrated |
 | 18 | [GPT-2 — 124M Parameter Model](./18_gpt2_model/README.md) | 🔲 | Full model · Parameter counting · Architecture details |
 
@@ -257,8 +257,8 @@ llm-from-scratch/
 ├── 13_architecture_overview/          ✅ Complete
 ├── 14_layer_norm/                     ✅ Complete
 ├── 15_gelu/                           ✅ Complete
-├── 16_shortcuts/                      🔲 Next
-├── 17_transformer_block/              🔲 Upcoming
+├── 16_shortcuts/                      ✅ Complete
+├── 17_transformer_block/              🔲 Next
 ├── 18_gpt2_model/                     🔲 Upcoming
 │   ... (Topics 19 – 36 same structure)
 │

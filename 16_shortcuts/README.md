@@ -1,13 +1,17 @@
 <div align="center">
-<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D3B6E,100:1A56A0&height=120&text=Topic%2016%20-%20Shortcut%20Connections&fontSize=28&fontColor=ffffff&fontAlignY=55&desc=Skip%20and%20Residual%20Connections%20%7C%20Stage%203%20%7C%20Building%20LLMs%20from%20Scratch%20%7C%20SHIVA%20KIRAN%20DADISHETTY&descSize=13&descAlignY=78"/>
-</div>
 
-![Topic](https://img.shields.io/badge/Topic-16%20of%2036-0D3B6E?style=for-the-badge)
-![Stage](https://img.shields.io/badge/Stage%203-LLM%20Architecture-1A56A0?style=for-the-badge)
-![Also Known As](https://img.shields.io/badge/Also%20Known%20As-Skip%20and%20Residual%20Connections-2E75B6?style=for-the-badge)
-![Key Feature](https://img.shields.io/badge/Key%20Feature-x%20%3D%20x%20%2B%20layer__output-22C55E?style=for-the-badge)
+<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D3B6E,100:1A56A0&height=120&text=Topic%2016%20-%20Shortcut%20Connections&fontSize=28&fontColor=ffffff&fontAlignY=55&desc=Skip%20and%20Residual%20Connections%20%7C%20Stage%203%20%7C%20Building%20LLMs%20from%20Scratch%20%7C%20SHIVA%20KIRAN%20DADISHETTY&descSize=13&descAlignY=78"/>
+
+<br/>
+
+[![Topic](https://img.shields.io/badge/Topic-16%20of%2036-0D3B6E?style=for-the-badge)](.)
+[![Stage](https://img.shields.io/badge/Stage%203-LLM%20Architecture-1A56A0?style=for-the-badge)](.)
+[![Also Known As](https://img.shields.io/badge/Also%20Known%20As-Skip%20and%20Residual%20Connections-2E75B6?style=for-the-badge)](.)
+[![Key Feature](https://img.shields.io/badge/Key%20Feature-x%20%3D%20x%20%2B%20layer__output-22C55E?style=for-the-badge)](.)
 
 **[← Back to Main Repository](../README.md)**
+
+</div>
 
 ---
 
@@ -175,7 +179,7 @@ if self.use_shortcut and x.shape == layer_output.shape:
     x = x + layer_output
 
 # In ExampleDeepNeuralNetwork with layer_sizes = [3, 3, 3, 3, 3, 1]:
-# Layer 0–3: input [1,3] → output [1,3]  → match → shortcut APPLIED
+# Layer 0-3: input [1,3] → output [1,3]  → match → shortcut APPLIED
 # Layer 4:   input [1,3] → output [1,1]  → differ → shortcut SKIPPED
 
 # In GPT-2 transformer blocks:
@@ -233,10 +237,10 @@ gradient flow also becomes smooth.
 
 ---
 
----
+<div align="center">
 
 *Part of the **Building LLMs from Scratch** series by **SHIVA KIRAN DADISHETTY***
 
-<div align="center">
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:1A56A0,100:0D3B6E&height=80&section=footer"/>
+
 </div>

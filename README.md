@@ -262,8 +262,7 @@ llm-from-scratch/
 ├── 18_gpt2_model/                     ✅ Complete
 ├── 19_next_token/                     ✅ Complete
 ├── 20_loss/                           🔲 Next
-├── 18_gpt2_model/                     🔲 Upcoming
-│   ... (Topics 19 – 36 same structure)
+│   ... (Topics 21 – 36 same structure)
 │
 ├── llm-systems/                       ← LLM Systems Series
 │   ├── README.md                      ← Master index

@@ -7,7 +7,7 @@
 [![Topic](https://img.shields.io/badge/Topic-24%20of%2036-0D3B6E?style=for-the-badge)](.)
 [![Stage](https://img.shields.io/badge/Stage%204-Pretraining-1A56A0?style=for-the-badge)](.)
 [![Also Known As](https://img.shields.io/badge/Also%20Known%20As-Decoding%20Strategy%202-2E75B6?style=for-the-badge)](.)
-[![Key Feature](https://img.shields.io/badge/Key%20Feature-torch.topk%20then%20-inf%20mask%20then%20softmax-22C55E?style=for-the-badge)](.)
+[![Key Feature](https://img.shields.io/badge/Key%20Feature-torch.topk%20%2D%2Dinf%20mask%20%2B%20softmax-22C55E?style=for-the-badge)](.)
 
 **[← Back to Main Repository](../README.md)**
 

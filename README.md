@@ -12,11 +12,11 @@
 
 <br/>
 
-[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-19%20%2F%2036-1A56A0?style=for-the-badge)](.)
+[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-20%20%2F%2036-1A56A0?style=for-the-badge)](.)
 [![Stage 1](https://img.shields.io/badge/Stage%201%20%7C%20Data%20Pipeline-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
 [![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
 [![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
-[![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-1%2F8-2E75B6?style=for-the-badge)](.)
+[![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-2%2F8-2E75B6?style=for-the-badge)](.)
 [![Stage 5](https://img.shields.io/badge/Stage%205%20%7C%20Finetuning-0%2F10-6B7280?style=for-the-badge)](.)
 
 </div>
@@ -50,12 +50,12 @@ Read the `README.md` first. Run the `.ipynb` to see it in action. Open the `.doc
 ## Progress
 
 ```
-Overall  ████████████████████████████████████████░░  19 / 36 topics complete
+Overall  ████████████████████████████████████████░░  20 / 36 topics complete
 
 Stage 1  Data Pipeline     ████████████████████  6 / 6  ✅ COMPLETE
 Stage 2  Attention         ████████████████████  6 / 6  ✅ COMPLETE
 Stage 3  Architecture      ████████████████████  6 / 6  ✅ COMPLETE
-Stage 4  Pretraining       ███░░░░░░░░░░░░░░░░░  1 / 8  ← active
+Stage 4  Pretraining       █████░░░░░░░░░░░░░░░  2 / 8  ← active
 Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░░░░  0 / 10
 ```
 
@@ -117,7 +117,7 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 | # | Topic | Status | Core Concept |
 |---|-------|:------:|--------------|
 | 19 | [Next Token Prediction](./19_next_token/README.md) | ✅ | generate_text_simple · greedy decoding · 6-step pipeline |
-| 20 | [LLM Loss Function](./20_loss/README.md) | 🔲 | Cross-entropy loss · Perplexity · Training signal |
+| 20 | [LLM Loss Function](./20_loss/README.md) | ✅ | cross_entropy · flatten · loss=10.7722 · perplexity=48725 |
 | 21 | [Evaluation on Real Dataset](./21_evaluation/README.md) | 🔲 | Book corpus · Train/val split · Evaluation loop |
 | 22 | [Full Pretraining Loop](./22_pretraining/README.md) | 🔲 | Optimizer · Scheduler · Gradient clipping · Full loop |
 | 23 | [Temperature Scaling](./23_temperature/README.md) | 🔲 | Output distribution · Creativity vs accuracy tradeoff |
@@ -261,7 +261,8 @@ llm-from-scratch/
 ├── 17_transformer_block/              ✅ Complete
 ├── 18_gpt2_model/                     ✅ Complete
 ├── 19_next_token/                     ✅ Complete
-├── 20_loss/                           🔲 Next
+├── 20_loss/                           ✅ Complete
+├── 21_evaluation/                     🔲 Next
 │   ... (Topics 21 – 36 same structure)
 │
 ├── llm-systems/                       ← LLM Systems Series

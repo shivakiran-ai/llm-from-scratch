@@ -12,11 +12,11 @@
 
 <br/>
 
-[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-24%20%2F%2036-1A56A0?style=for-the-badge)](.)
+[![Topics Complete](https://img.shields.io/badge/Topics%20Complete-25%20%2F%2036-1A56A0?style=for-the-badge)](.)
 [![Stage 1](https://img.shields.io/badge/Stage%201%20%7C%20Data%20Pipeline-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
 [![Stage 2](https://img.shields.io/badge/Stage%202%20%7C%20Attention-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
 [![Stage 3](https://img.shields.io/badge/Stage%203%20%7C%20Architecture-6%2F6%20COMPLETE-22C55E?style=for-the-badge)](.)
-[![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-6%2F8-2E75B6?style=for-the-badge)](.)
+[![Stage 4](https://img.shields.io/badge/Stage%204%20%7C%20Pretraining-7%2F8-2E75B6?style=for-the-badge)](.)
 [![Stage 5](https://img.shields.io/badge/Stage%205%20%7C%20Finetuning-0%2F10-6B7280?style=for-the-badge)](.)
 
 </div>
@@ -50,12 +50,12 @@ Read the `README.md` first. Run the `.ipynb` to see it in action. Open the `.doc
 ## Progress
 
 ```
-Overall  ████████████████████████████████████████░░  24 / 36 topics complete
+Overall  ████████████████████████████████████████░░  25 / 36 topics complete
 
 Stage 1  Data Pipeline     ████████████████████  6 / 6  ✅ COMPLETE
 Stage 2  Attention         ████████████████████  6 / 6  ✅ COMPLETE
 Stage 3  Architecture      ████████████████████  6 / 6  ✅ COMPLETE
-Stage 4  Pretraining       ███████████████░░░░░  6 / 8  ← active
+Stage 4  Pretraining       ██████████████████░░  7 / 8  ← active
 Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░░░░  0 / 10
 ```
 
@@ -122,7 +122,7 @@ Stage 5  Finetuning        ░░░░░░░░░░░░░░░░░�
 | 22 | [Full Pretraining Loop](./22_pretraining/README.md) | ✅ | train_model_simple · AdamW · loss 9.781→0.391 · 10 epochs |
 | 23 | [Temperature Scaling](./23_temperature/README.md) | ✅ | logits÷T → softmax → multinomial · forward 582/1000 |
 | 24 | [Top-k Sampling](./24_topk_sampling/README.md) | ✅ | torch.topk · -inf mask · generate() with top_k+temperature |
-| 25 | [Saving & Loading Model Weights](./25_checkpointing/README.md) | 🔲 | PyTorch state dicts · Resumable training |
+| 25 | [Saving & Loading Model Weights](./25_checkpointing/README.md) | ✅ | torch.save · state_dict · optimizer checkpoint · weights_only |
 | 26 | [Loading OpenAI GPT-2 Weights](./26_pretrained_weights/README.md) | 🔲 | Weight mapping · Transfer from OpenAI checkpoint |
 
 ---
@@ -266,7 +266,8 @@ llm-from-scratch/
 ├── 22_pretraining/                    ✅ Complete
 ├── 23_temperature/                    ✅ Complete
 ├── 24_topk_sampling/                  ✅ Complete
-├── 25_checkpointing/                  🔲 Next
+├── 25_checkpointing/                  ✅ Complete
+├── 26_pretrained_weights/             🔲 Next
 │   ... (Topics 21 – 36 same structure)
 │
 ├── llm-systems/                       ← LLM Systems Series
